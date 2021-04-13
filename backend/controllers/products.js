@@ -7,7 +7,7 @@ export const get = asyncHandler(async (req, res) => {
 });
 
 export const getOne = asyncHandler(async (req, res) => {
-  const product = await productModel.findById(req.params.id);
+  const product = await productModel.findOne({ slug: req.params.id });
   if (product) {
     res.status(200).json(product);
   } else {
