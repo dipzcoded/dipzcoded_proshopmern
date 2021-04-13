@@ -1,9 +1,10 @@
 import express from "express";
-import products from "./data/products.js";
-import connectToDb from "./db/index.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
+import connectToDb from "./db/index.js";
+import productRoutes from "./routes/api/products.js";
+import { errorHanlder, notFound } from "./middlewares/error.js";
 
 // loading up .env variables
 dotenv.config();
@@ -21,14 +22,14 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 // routes
-app.get("/api/products", (req, res) => {
-  res.json(products);
-});
+app.use("/api/products", productRoutes);
 
-app.get("/api/products/:id", (req, res) => {
-  const product = products.find((el) => el._id === req.params.id);
-  res.json(product);
-});
+// not found route
+app.use(notFound);
+
+// error middleware
+app.use(errorHanlder);
+
 const Port = process.env.PORT || 5000;
 
 // creating a server
