@@ -16,7 +16,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 
 const ProductScreen = ({ match, history }) => {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const { product, isLoading, error } = useSelector(
     (state) => state.productList
@@ -54,7 +54,7 @@ const ProductScreen = ({ match, history }) => {
             </ListGroup.Item>
             <ListGroup.Item>{showRating(product?.rating)}</ListGroup.Item>
             <ListGroup.Item>Price : ${product?.price}</ListGroup.Item>
-            <ListGroup.Item>Desc : ${product?.description}</ListGroup.Item>
+            <ListGroup.Item>Desc : {product?.description}</ListGroup.Item>
           </ListGroup>
         </Col>
         <Col md={3}>
