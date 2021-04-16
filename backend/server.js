@@ -4,7 +4,8 @@ import cors from "cors";
 import morgan from "morgan";
 import connectToDb from "./db/index.js";
 import productRoutes from "./routes/api/products.js";
-import { errorHanlder, notFound } from "./middlewares/error.js";
+import userRoutes from "./routes/api/user.js";
+import { errorHandler, notFound } from "./middlewares/error.js";
 
 // loading up .env variables
 dotenv.config();
@@ -23,12 +24,13 @@ app.use(cors());
 
 // routes
 app.use("/api/products", productRoutes);
+app.use("/api/users", userRoutes);
 
 // not found route
 app.use(notFound);
 
 // error middleware
-app.use(errorHanlder);
+app.use(errorHandler);
 
 const Port = process.env.PORT || 5000;
 
