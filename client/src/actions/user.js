@@ -7,6 +7,12 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_FAIL,
 } from "../types";
 import Cookie from "js-cookie";
 export const login = (email, password) => async (dispatch) => {
@@ -63,4 +69,57 @@ export const register = (userData) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   Cookie.remove("userData");
   dispatch({ type: USER_LOGOUT });
+};
+
+export const getUserDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+    const {
+      userData: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/users/${id}`, config);
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+  } catch (err) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
+
+export const updateUserDetails = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
+    const {
+      userData: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.patch(`/api/users/profile`, user, config);
+    dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+    Cookie.set("userData", JSON.stringify(data));
+  } catch (err) {
+    dispatch({
+      type: USER_UPDATE_PROFILE_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
 };

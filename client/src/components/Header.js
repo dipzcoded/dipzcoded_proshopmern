@@ -4,10 +4,13 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../actions/user";
 import decode from "jwt-decode";
+import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userData);
+
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const onLogout = () => {
     dispatch(logout());
@@ -21,7 +24,7 @@ const Header = () => {
         dispatch(logout());
       }
     }
-  }, [userInfo, dispatch, logout]);
+  }, [userInfo, dispatch, logout, location]);
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
