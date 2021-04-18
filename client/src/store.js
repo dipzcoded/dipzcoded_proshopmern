@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { productReducer } from "./reducers/products";
 import { cartReducer } from "./reducers/cart";
+import { orderCreateReducer } from "./reducers/order";
 import {
   userReducer,
   userDetailsReducer,
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   userData: userReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
 });
 
 const cartItemsFromStorage = Cookie.get("cartItems")
@@ -25,8 +27,20 @@ const cartItemsFromStorage = Cookie.get("cartItems")
 const userDataFromStorage = Cookie.get("userData")
   ? JSON.parse(Cookie.get("userData"))
   : null;
+
+const shippingAddressFromStorage = Cookie.get("shippingAddress")
+  ? JSON.parse(Cookie.get("shippingAddress"))
+  : null;
+
+const paymentMethodFromStorage = Cookie.get("paymentMethod")
+  ? JSON.parse(Cookie.get("paymentMethod"))
+  : null;
 const initialState = {
-  cartList: { cartItems: cartItemsFromStorage },
+  cartList: {
+    cartItems: cartItemsFromStorage,
+    shippingAddress: shippingAddressFromStorage,
+    paymentMethod: paymentMethodFromStorage,
+  },
   userData: {
     userInfo: userDataFromStorage,
   },

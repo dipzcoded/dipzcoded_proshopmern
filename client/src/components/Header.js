@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,6 +8,8 @@ import { useLocation } from "react-router-dom";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userData);
+  const [userName, setUserName] = useState(userInfo?.user.name || "");
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -25,6 +27,15 @@ const Header = () => {
       }
     }
   }, [userInfo, dispatch, logout, location]);
+
+  useEffect(() => {
+    if (userUpdateProfile && userUpdateProfile.userInfo) {
+      setUserName(
+        userUpdateProfile?.userInfo?.user?.name &&
+          userUpdateProfile?.userInfo?.user?.name
+      );
+    }
+  }, [userUpdateProfile, setUserName]);
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
@@ -42,7 +53,7 @@ const Header = () => {
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.user.name} id="username">
+                <NavDropdown title={userName} id="username">
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>Profile</NavDropdown.Item>
                   </LinkContainer>

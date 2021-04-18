@@ -112,6 +112,7 @@ export const updateUserDetails = (user) => async (dispatch, getState) => {
 
     const { data } = await axios.patch(`/api/users/profile`, user, config);
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
+
     Cookie.set("userData", JSON.stringify(data));
   } catch (err) {
     dispatch({

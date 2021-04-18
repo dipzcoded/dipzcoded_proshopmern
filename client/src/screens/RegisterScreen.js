@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 import { register } from "../actions/user";
 import FormContainer from "../components/FormContainer";
 const RegisterScreen = ({ location, history }) => {
-  const [registerData, setLoginData] = useState({
+  const [registerData, setRegisterData] = useState({
     name: "",
     email: "",
     password: "",
@@ -53,7 +53,10 @@ const RegisterScreen = ({ location, history }) => {
             placeholder="Enter name"
             value={name}
             onChange={(e) =>
-              setLoginData({ ...registerData, [e.target.name]: e.target.value })
+              setRegisterData({
+                ...registerData,
+                [e.target.name]: e.target.value,
+              })
             }
           ></Form.Control>
         </Form.Group>
@@ -66,7 +69,10 @@ const RegisterScreen = ({ location, history }) => {
             placeholder="Enter email"
             value={email}
             onChange={(e) =>
-              setLoginData({ ...registerData, [e.target.name]: e.target.value })
+              setRegisterData({
+                ...registerData,
+                [e.target.name]: e.target.value,
+              })
             }
           ></Form.Control>
         </Form.Group>
@@ -79,7 +85,10 @@ const RegisterScreen = ({ location, history }) => {
             placeholder="Enter password"
             value={password}
             onChange={(e) =>
-              setLoginData({ ...registerData, [e.target.name]: e.target.value })
+              setRegisterData({
+                ...registerData,
+                [e.target.name]: e.target.value,
+              })
             }
           ></Form.Control>
         </Form.Group>
@@ -92,7 +101,10 @@ const RegisterScreen = ({ location, history }) => {
             placeholder="Enter confirm password"
             value={confirmPassword}
             onChange={(e) =>
-              setLoginData({ ...registerData, [e.target.name]: e.target.value })
+              setRegisterData({
+                ...registerData,
+                [e.target.name]: e.target.value,
+              })
             }
           ></Form.Control>
         </Form.Group>

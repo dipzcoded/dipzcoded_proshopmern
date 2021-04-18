@@ -17,14 +17,14 @@ const ProfileScreen = ({ location, history }) => {
   const dispatch = useDispatch();
   const { isLoading, error, user } = useSelector((state) => state.userDetails);
   const { userInfo } = useSelector((state) => state.userData);
-  const { success } = useSelector((state) => state.userUpdateProfile);
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
 
   useEffect(() => {
     if (!userInfo) {
       history.push("/login");
     }
 
-    if (!user) {
+    if (!user && !isLoading) {
       dispatch(getUserDetails("profile"));
     }
 
@@ -33,7 +33,21 @@ const ProfileScreen = ({ location, history }) => {
       name: user && user.name ? user.name : "",
       email: user && user.email ? user.email : "",
     });
-  }, [location, history, user, userInfo, dispatch]);
+  }, [location, history, user, userInfo, dispatch, userUpdateProfile]);
+
+  useEffect(() => {
+    if (userUpdateProfile && userUpdateProfile.userInfo) {
+      setUserDetails({
+        ...userDetails,
+        name: userUpdateProfile?.userInfo?.user?.name
+          ? userUpdateProfile?.userInfo?.user?.name
+          : "",
+        email: userUpdateProfile?.userInfo?.user?.email
+          ? userUpdateProfile?.userInfo?.user?.email
+          : "",
+      });
+    }
+  }, [userUpdateProfile]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -61,7 +75,9 @@ const ProfileScreen = ({ location, history }) => {
         <h2>User Profile</h2>
 
         {message && <Message variant="danger">{message}</Message>}
-        {success && <Message variant="success">Profile Updated</Message>}
+        {userUpdateProfile.success && (
+          <Message variant="success">Profile Updated</Message>
+        )}
         {error && <Message variant="danger">{error}</Message>}
         {isLoading && <Loader />}
         <Form onSubmit={submitHandler}>

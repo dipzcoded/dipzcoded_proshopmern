@@ -5,6 +5,7 @@ import morgan from "morgan";
 import connectToDb from "./db/index.js";
 import productRoutes from "./routes/api/products.js";
 import userRoutes from "./routes/api/user.js";
+import orderRoutes from "./routes/api/order.js";
 import { errorHandler, notFound } from "./middlewares/error.js";
 
 // loading up .env variables
@@ -25,6 +26,7 @@ app.use(cors());
 // routes
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/orders", orderRoutes);
 
 // not found route
 app.use(notFound);
