@@ -33,7 +33,15 @@ const ProfileScreen = ({ location, history }) => {
       name: user && user.name ? user.name : "",
       email: user && user.email ? user.email : "",
     });
-  }, [location, history, user, userInfo, dispatch, userUpdateProfile]);
+  }, [
+    location,
+    history,
+    user,
+    userInfo,
+    dispatch,
+    userUpdateProfile,
+    setUserDetails,
+  ]);
 
   useEffect(() => {
     if (userUpdateProfile && userUpdateProfile.userInfo) {

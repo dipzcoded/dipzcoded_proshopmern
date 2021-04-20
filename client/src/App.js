@@ -10,6 +10,8 @@ import ProfileScreen from "./screens/ProfileScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import OrderScreen from "./screens/OrderScreen";
+
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { logout } from "./actions/user";
@@ -42,6 +44,7 @@ const App = () => {
             <Route exact path="/shipping" component={ShippingScreen} />
             <Route exact path="/payment" component={PaymentScreen} />
             <Route exact path="/placeorder" component={PlaceOrderScreen} />
+            <Route exact path="/order/:id" component={OrderScreen} />
             <Route exact path="/product/:id" component={ProductScreen} />
             <Route exact path="/cart/:id?" component={CartScreen} />
             <Route exact path="/" component={HomeScreen} />

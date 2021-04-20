@@ -1,7 +1,14 @@
 import express from "express";
 import auth from "../../middlewares/auth.js";
-import { addOrderItems } from "../../controllers/order.js";
+import {
+  addOrderItems,
+  getOrderById,
+  updateOrderToPaid,
+} from "../../controllers/order.js";
 const router = express.Router();
-router.route("/").post(auth, addOrderItems);
+router.use(auth);
+router.route("/").post(addOrderItems);
+router.route("/:id").get(getOrderById);
+router.route("/:id/pay").patch(updateOrderToPaid);
 
 export default router;
