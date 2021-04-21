@@ -13,6 +13,9 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
+  USER_DETAILS_RESET,
+  ORDER_LIST_MY_RESET,
+  USER_UPDATE_PROFILE_RESET,
 } from "../types";
 import Cookie from "js-cookie";
 export const login = (email, password) => async (dispatch) => {
@@ -69,6 +72,9 @@ export const register = (userData) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   Cookie.remove("userData");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_DETAILS_RESET });
+  dispatch({ type: ORDER_LIST_MY_RESET });
+  dispatch({ type: USER_UPDATE_PROFILE_RESET });
 };
 
 export const getUserDetails = (id) => async (dispatch, getState) => {

@@ -29,13 +29,17 @@ const Header = () => {
   }, [userInfo, dispatch, logout, location]);
 
   useEffect(() => {
+    if (userInfo) {
+      setUserName(userInfo?.user?.name);
+    }
+
     if (userUpdateProfile && userUpdateProfile.userInfo) {
       setUserName(
         userUpdateProfile?.userInfo?.user?.name &&
           userUpdateProfile?.userInfo?.user?.name
       );
     }
-  }, [userUpdateProfile, setUserName]);
+  }, [userUpdateProfile, setUserName, userInfo]);
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>

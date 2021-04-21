@@ -64,3 +64,13 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
     throw new Error("Order not found");
   }
 });
+
+export const getMyOrders = asyncHandler(async (req, res) => {
+  const orders = await orderModel.find({ user: req.user });
+  if (orders && orders.length) {
+    res.json(orders);
+  } else {
+    res.status(404);
+    throw new Error("No Order was created yet");
+  }
+});
