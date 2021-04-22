@@ -26,7 +26,7 @@ const Header = () => {
         dispatch(logout());
       }
     }
-  }, [userInfo, dispatch, logout, location]);
+  }, [userInfo, dispatch, location]);
 
   useEffect(() => {
     if (userInfo) {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,7 @@ const UserListScreen = ({ location, history }) => {
     } else {
       history.push("/login");
     }
-  }, [dispatch, listUsers, userInfo, successDelete]);
+  }, [dispatch, userInfo, successDelete, history]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure")) {
@@ -58,7 +58,7 @@ const UserListScreen = ({ location, history }) => {
                   )}
                 </td>
                 <td>
-                  <LinkContainer to={`/user/${user._id}/edit`}>
+                  <LinkContainer to={`/admin/user/${user._id}/edit`}>
                     <Button variant="light" className="btn-sm">
                       <i className="fas fa-edit"></i>
                     </Button>

@@ -21,6 +21,6 @@ router
 router.route("/login").post(login);
 router.route("/signup").post(signUp);
 router.use(auth);
-router.route("/profile").get(getUserProfile).patch(updateUserProfile);
+router.route("/edit/profile").get(getUserProfile).patch(updateUserProfile);
 
 export default router;

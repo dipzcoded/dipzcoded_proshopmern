@@ -13,7 +13,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(loadProducts());
-  }, [dispatch, loadProducts]);
+  }, [dispatch]);
 
   if (isLoading) {
     return <Loader />;

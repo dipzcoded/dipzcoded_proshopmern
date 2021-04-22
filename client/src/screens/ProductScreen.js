@@ -25,7 +25,7 @@ const ProductScreen = ({ match, history }) => {
   const productId = match.params.id;
   useEffect(() => {
     dispatch(getProductByID(productId));
-  }, [match, dispatch]);
+  }, [match, dispatch, productId]);
   const addToCartHandler = (e) => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
@@ -105,8 +105,7 @@ const ProductScreen = ({ match, history }) => {
                   onClick={addToCartHandler}
                   className="btn-block"
                   type="button"
-                  disabled={!product?.countInStock}
-                  disabled={qty === 0}
+                  disabled={!product?.countInStock || qty === 0}
                 >
                   Add To Cart
                 </Button>

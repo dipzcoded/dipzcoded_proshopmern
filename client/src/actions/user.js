@@ -23,6 +23,13 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
+  USER_LOGGEDIN_DETAILS_SUCCESS,
+  USER_LOGGEDIN_DETAILS_RESET,
+  USER_LOGGEDIN_DETAILS_REQUEST,
+  USER_LOGGEDIN_DETAILS_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
 } from "../types";
 import Cookie from "js-cookie";
 export const login = (email, password) => async (dispatch) => {
@@ -79,6 +86,7 @@ export const register = (userData) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   Cookie.remove("userData");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_LOGGEDIN_DETAILS_RESET });
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_LIST_MY_RESET });
   dispatch({ type: USER_UPDATE_PROFILE_RESET });
@@ -111,6 +119,32 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 };
 
+export const getUserLoggedinDetails = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_LOGGEDIN_DETAILS_REQUEST });
+    const {
+      userData: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/users/edit/profile`, config);
+    dispatch({ type: USER_LOGGEDIN_DETAILS_SUCCESS, payload: data });
+  } catch (err) {
+    dispatch({
+      type: USER_LOGGEDIN_DETAILS_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
+
 export const updateUserDetails = (user) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
@@ -124,7 +158,7 @@ export const updateUserDetails = (user) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.patch(`/api/users/profile`, user, config);
+    const { data } = await axios.patch(`/api/users/edit/profile`, user, config);
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data });
 
     Cookie.set("userData", JSON.stringify(data));
@@ -181,6 +215,33 @@ export const deleteUserById = (id) => async (dispatch, getState) => {
   } catch (err) {
     dispatch({
       type: USER_DELETE_FAIL,
+      payload:
+        err.response && err.response.data.message
+          ? err.response.data.message
+          : err.message,
+    });
+  }
+};
+
+export const updateUserById = (id, user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_UPDATE_REQUEST });
+    const {
+      userData: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.patch(`/api/users/${id}`, user, config);
+    dispatch({ type: USER_UPDATE_SUCCESS });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+  } catch (err) {
+    dispatch({
+      type: USER_UPDATE_FAIL,
       payload:
         err.response && err.response.data.message
           ? err.response.data.message

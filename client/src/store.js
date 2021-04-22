@@ -12,9 +12,11 @@ import {
 import {
   userReducer,
   userDetailsReducer,
+  userLogginDetailsReducer,
   userUpdateProfileReducer,
   userListReducer,
   userDeleteReducer,
+  userUpdateReducer,
 } from "./reducers/user";
 import Cookie from "js-cookie";
 
@@ -23,7 +25,9 @@ const reducer = combineReducers({
   cartList: cartReducer,
   userData: userReducer,
   userDetails: userDetailsReducer,
+  userLoggedinDetails: userLogginDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userUpdate: userUpdateReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
   orderCreate: orderCreateReducer,

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
@@ -34,9 +34,7 @@ const PlaceOrderScreen = ({ history }) => {
     Number(taxPrice)
   ).toFixed(2);
 
-  const { isLoading, order, error, success } = useSelector(
-    (state) => state.orderCreate
-  );
+  const { order, error, success } = useSelector((state) => state.orderCreate);
   useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`);

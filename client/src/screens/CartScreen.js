@@ -18,7 +18,7 @@ const CartScreen = ({ match, location, history }) => {
     if (productId) {
       dispatch(addToCart(productId, productQty, history));
     }
-  }, [dispatch, addToCart, productId, productQty]);
+  }, [dispatch, productId, productQty, history]);
   const onCheckOutHandler = () => {
     history.push("/login?redirect=shipping");
   };

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getUserDetails, updateUserDetails } from "../actions/user";
+import { getUserLoggedinDetails, updateUserDetails } from "../actions/user";
 import { listMyOrders } from "../actions/order";
 const ProfileScreen = ({ location, history }) => {
   const [userDetails, setUserDetails] = useState({
@@ -17,7 +17,9 @@ const ProfileScreen = ({ location, history }) => {
   const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
-  const { isLoading, error, user } = useSelector((state) => state.userDetails);
+  const { isLoading, error, user } = useSelector(
+    (state) => state.userLoggedinDetails
+  );
   const { userInfo } = useSelector((state) => state.userData);
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const {
@@ -32,7 +34,7 @@ const ProfileScreen = ({ location, history }) => {
     }
 
     if (!user && !isLoading) {
-      dispatch(getUserDetails("profile"));
+      dispatch(getUserLoggedinDetails());
       dispatch(listMyOrders());
     }
 
@@ -49,7 +51,8 @@ const ProfileScreen = ({ location, history }) => {
     dispatch,
     userUpdateProfile,
     setUserDetails,
-    listMyOrders,
+    isLoading,
+    userDetails,
   ]);
 
   useEffect(() => {
@@ -64,7 +67,7 @@ const ProfileScreen = ({ location, history }) => {
           : "",
       });
     }
-  }, [userUpdateProfile]);
+  }, [userUpdateProfile, userDetails]);
 
   const submitHandler = (e) => {
     e.preventDefault();

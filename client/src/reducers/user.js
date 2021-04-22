@@ -8,6 +8,10 @@ import {
   USER_REGISTER_SUCCESS,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_REQUEST,
+  USER_LOGGEDIN_DETAILS_FAIL,
+  USER_LOGGEDIN_DETAILS_REQUEST,
+  USER_LOGGEDIN_DETAILS_RESET,
+  USER_LOGGEDIN_DETAILS_SUCCESS,
   USER_DETAILS_FAIL,
   USER_DETAILS_RESET,
   USER_UPDATE_PROFILE_FAIL,
@@ -21,6 +25,10 @@ import {
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_RESET,
 } from "../types";
 const initialState = {
   isLoading: false,
@@ -92,6 +100,40 @@ export const userDetailsReducer = (
       };
 
     case USER_DETAILS_RESET:
+      return { user: null };
+
+    default:
+      return state;
+  }
+};
+
+export const userLogginDetailsReducer = (
+  state = { user: null, isLoading: false, error: null },
+  action
+) => {
+  const { type, payload } = action;
+  switch (type) {
+    case USER_LOGGEDIN_DETAILS_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case USER_LOGGEDIN_DETAILS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        user: payload,
+        error: null,
+      };
+    case USER_LOGGEDIN_DETAILS_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+      };
+
+    case USER_LOGGEDIN_DETAILS_RESET:
       return { user: null };
 
     default:
@@ -190,6 +232,40 @@ export const userDeleteReducer = (state = {}, action) => {
         ...state,
         isLoading: false,
         error: payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const userUpdateReducer = (state = { user: null }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case USER_UPDATE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        success: false,
+      };
+
+    case USER_UPDATE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        error: null,
+      };
+    case USER_UPDATE_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+      };
+
+    case USER_UPDATE_RESET:
+      return {
+        user: null,
       };
 
     default:
