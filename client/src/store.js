@@ -13,6 +13,8 @@ import {
   userReducer,
   userDetailsReducer,
   userUpdateProfileReducer,
+  userListReducer,
+  userDeleteReducer,
 } from "./reducers/user";
 import Cookie from "js-cookie";
 
@@ -22,6 +24,8 @@ const reducer = combineReducers({
   userData: userReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
+  userList: userListReducer,
+  userDelete: userDeleteReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,

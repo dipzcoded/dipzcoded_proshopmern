@@ -14,6 +14,13 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_RESET,
   USER_UPDATE_PROFILE_SUCCESS,
+  USER_LIST_FAIL,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
+  USER_LIST_RESET,
+  USER_DELETE_FAIL,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
 } from "../types";
 const initialState = {
   isLoading: false,
@@ -120,6 +127,70 @@ export const userUpdateProfileReducer = (state = {}, action) => {
 
     case USER_UPDATE_PROFILE_RESET:
       return {};
+
+    default:
+      return state;
+  }
+};
+
+export const userListReducer = (state = { users: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case USER_LIST_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        success: false,
+      };
+
+    case USER_LIST_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        users: payload,
+        error: null,
+      };
+    case USER_LIST_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+      };
+
+    case USER_LIST_RESET:
+      return {
+        ...state,
+        user: [],
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const userDeleteReducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case USER_DELETE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+        success: false,
+      };
+
+    case USER_DELETE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        error: null,
+      };
+    case USER_DELETE_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+      };
 
     default:
       return state;

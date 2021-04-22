@@ -12,6 +12,41 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+export const getUsers = asyncHandler(async (req, res) => {
+  const users = await userModel.find();
+  res.json(users);
+});
+
+export const getUserById = asyncHandler(async (req, res) => {
+  const user = await userModel.findById(req.params.id).select("-password");
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
+export const deleteUserById = asyncHandler(async (req, res) => {
+  const user = await userModel.findById(req.params.id);
+  if (user) {
+    await user.remove();
+    res.status(200).json({ message: "User removed" });
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  res.json(users);
+});
+
+export const updateUser = asyncHandler(async (req, res) => {
+  const user = await userModel.findById(req.params.id).select("-password");
+  const updatedUser = await userModel
+    .findByIdAndUpdate(user._id, { $set: req.body }, { new: true })
+    .select("-password");
+  res.json(updatedUser);
+});
+
 export const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await userModel.findById(req.user).select("-password");
   if (user) {

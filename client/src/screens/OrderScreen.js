@@ -8,7 +8,7 @@ import { getOrderDetails, payOrder } from "../actions/order";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 import { ORDER_PAY_RESET } from "../types";
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ match, history }) => {
   const dispatch = useDispatch();
   const { isLoading, error, order } = useSelector(
     (state) => state.orderDetails
@@ -16,6 +16,8 @@ const OrderScreen = ({ match }) => {
   const { isLoading: isLoadingPay, success: successPay } = useSelector(
     (state) => state.orderPay
   );
+
+  const { userInfo } = useSelector((state) => state.userData);
   const orderId = match.params.id;
   const [sdkReady, setSdkReady] = useState(false);
   useEffect(() => {
@@ -43,8 +45,12 @@ const OrderScreen = ({ match }) => {
       }
     }
 
+    if (!userInfo) {
+      history.push("/login");
+    }
+
     // eslint-disable-next-line
-  }, [dispatch, getOrderDetails, match, order, orderId, successPay]);
+  }, [dispatch, getOrderDetails, match, order, orderId, successPay, userInfo]);
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult);
