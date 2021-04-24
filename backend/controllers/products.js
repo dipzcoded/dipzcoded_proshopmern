@@ -7,12 +7,26 @@ export const get = asyncHandler(async (req, res) => {
 });
 
 export const getOne = asyncHandler(async (req, res) => {
-  const product = await productModel.findOne({ slug: req.params.id });
-  if (product) {
-    res.status(200).json(product);
+  let product;
+  if (
+    req.params.id.includes("-") ||
+    req.params.id.split("-")[0].length !== 24
+  ) {
+    product = await productModel.findOne({ slug: req.params.id });
+    if (product) {
+      return res.status(200).json(product);
+    } else {
+      res.status(404);
+      throw new Error("product not found");
+    }
   } else {
-    res.status(404);
-    throw new Error("Product not found");
+    product = await productModel.findById(req.params.id);
+    if (product) {
+      return res.status(200).json(product);
+    } else {
+      res.status(404);
+      throw new Error("product not found");
+    }
   }
 });
 

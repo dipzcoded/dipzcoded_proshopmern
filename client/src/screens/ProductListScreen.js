@@ -9,6 +9,7 @@ import {
   deleteProductByID,
   createProduct,
 } from "../actions/products";
+import { PRODUCT_DELETE_RESET } from "../types";
 import { PRODUCT_CREATE_RESET } from "../types";
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -30,9 +31,10 @@ const ProductListScreen = ({ history, match }) => {
 
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
+    dispatch({ type: PRODUCT_DELETE_RESET });
     if (userInfo && userInfo?.user?.isAdmin) {
       if (successCreate) {
-        history.push(`/admin/product/${productCreate?.slug}/edit`);
+        history.push(`/admin/product/${productCreate?._id}/edit`);
       } else {
         dispatch(loadProducts());
       }
@@ -99,7 +101,7 @@ const ProductListScreen = ({ history, match }) => {
                 <td>{product?.category}</td>
                 <td>{product?.brand}</td>
                 <td>
-                  <LinkContainer to={`/admin/product/${product?.slug}/edit`}>
+                  <LinkContainer to={`/admin/product/${product?._id}/edit`}>
                     <Button variant="light" className="btn-sm">
                       <i className="fas fa-edit"></i>
                     </Button>

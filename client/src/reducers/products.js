@@ -17,6 +17,7 @@ import {
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_RESET,
   PRODUCT_UPDATE_SUCCESS,
+  PRODUCT_DELETE_RESET,
 } from "../types";
 const initialState = {
   products: [],
@@ -90,6 +91,9 @@ export const productDeleteReducer = (state = {}, action) => {
         isLoading: false,
         error: payload,
       };
+
+    case PRODUCT_DELETE_RESET:
+      return {};
 
     default:
       return state;

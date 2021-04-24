@@ -30,6 +30,7 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
+  ORDER_LIST_ALL_RESET,
 } from "../types";
 import Cookie from "js-cookie";
 export const login = (email, password) => async (dispatch) => {
@@ -91,6 +92,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: ORDER_LIST_MY_RESET });
   dispatch({ type: USER_UPDATE_PROFILE_RESET });
   dispatch({ type: USER_LIST_RESET });
+  dispatch({ type: ORDER_LIST_ALL_RESET });
 };
 
 export const getUserDetails = (id) => async (dispatch, getState) => {

@@ -13,6 +13,8 @@ import {
   orderDetailsReducer,
   orderPayReducer,
   orderListMyReducer,
+  orderListAllReducer,
+  orderDeliverReducer,
 } from "./reducers/order";
 import {
   userReducer,
@@ -41,7 +43,9 @@ const reducer = combineReducers({
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
+  orderDeliver: orderDeliverReducer,
   orderMyList: orderListMyReducer,
+  orderAllList: orderListAllReducer,
 });
 
 const cartItemsFromStorage = Cookie.get("cartItems")
