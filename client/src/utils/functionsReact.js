@@ -11,10 +11,10 @@ export const showRating = (rating) => (
       rating={rating}
       starRatedColor="gold"
       numberOfStars={5}
-      starDimension="18px"
+      starDimension="16px"
       starSpacing="1px"
     />
-    <p style={{ display: "inline-block" }}>
+    <p style={{ display: "inline-block", marginTop: "2.8px" }}>
       {rating} {rating === 1 ? "review" : "reviews"}
     </p>
   </div>

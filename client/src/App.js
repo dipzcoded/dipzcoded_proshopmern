@@ -3,12 +3,14 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
+import ProductListScreen from "./screens/ProductListScreen";
 import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import UserListScreen from "./screens/UserListScreen";
 import UserEditScreen from "./screens/UserEditScreen";
+import ProductEditScreen from "./screens/ProductEditScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
@@ -52,8 +54,18 @@ const App = () => {
             <Route exact path="/admin/userlist" component={UserListScreen} />
             <Route
               exact
+              path="/admin/productlist"
+              component={ProductListScreen}
+            />
+            <Route
+              exact
               path="/admin/user/:id/edit"
               component={UserEditScreen}
+            />
+            <Route
+              exact
+              path="/admin/product/:id/edit"
+              component={ProductEditScreen}
             />
             <Route exact path="/" component={HomeScreen} />
           </Switch>

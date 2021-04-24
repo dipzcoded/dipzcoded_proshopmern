@@ -5,7 +5,18 @@ import {
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
+  PRODUCT_DELETE_FAIL,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_RESET,
+  PRODUCT_CREATE_SUCCESS,
   CLEAR_DETAILS,
+  PRODUCT_UPDATE_FAIL,
+  PRODUCT_UPDATE_REQUEST,
+  PRODUCT_UPDATE_RESET,
+  PRODUCT_UPDATE_SUCCESS,
 } from "../types";
 const initialState = {
   products: [],
@@ -52,6 +63,98 @@ export const productReducer = (state = initialState, action) => {
         product: { reviews: [] },
         error: null,
       };
+    default:
+      return state;
+  }
+};
+
+export const productDeleteReducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PRODUCT_DELETE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case PRODUCT_DELETE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        error: null,
+      };
+    case PRODUCT_DELETE_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const productCreateReducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PRODUCT_CREATE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case PRODUCT_CREATE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        product: payload,
+        error: null,
+      };
+    case PRODUCT_CREATE_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+      };
+
+    case PRODUCT_CREATE_RESET:
+      return {};
+
+    default:
+      return state;
+  }
+};
+
+export const productUpdateReducer = (state = { product: null }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PRODUCT_UPDATE_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case PRODUCT_UPDATE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        product: payload,
+        error: null,
+      };
+    case PRODUCT_UPDATE_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+      };
+
+    case PRODUCT_UPDATE_RESET:
+      return { product: null };
+
     default:
       return state;
   }

@@ -6,6 +6,7 @@ import userModel from "./models/User.js";
 import productModel from "./models/Product.js";
 import orderModel from "./models/Order.js";
 import connectToDb from "./db/index.js";
+import slugify from "slugify";
 
 dotenv.config();
 connectToDb();
@@ -23,6 +24,7 @@ const importData = async () => {
       return {
         ...el,
         user: adminUser,
+        slug: slugify(el.name, { lower: true }),
       };
     });
     await productModel.insertMany(sampleProducts);
