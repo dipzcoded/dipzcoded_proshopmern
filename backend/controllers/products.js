@@ -1,4 +1,5 @@
 import productModel from "../models/Product.js";
+import userModel from "../models/User.js";
 import asyncHandler from "express-async-handler";
 
 export const get = asyncHandler(async (req, res) => {
@@ -79,6 +80,41 @@ export const updateProduct = asyncHandler(async (req, res) => {
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);
+  } else {
+    res.status(404);
+    throw new Error("product not found");
+  }
+});
+
+export const createProductReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+  const product = await productModel.findOne({ slug: req.params.id });
+  if (product) {
+    const allReadyReviewed = product.reviews.find(
+      (el) => el.user.toString() === req.user.toString()
+    );
+    if (allReadyReviewed) {
+      res.status(400);
+      throw new Error("Product already reviewed by the user");
+    }
+
+    const user = await userModel.findById(req.user);
+
+    const review = {
+      user: req.user,
+      name: user.name,
+      rating: Number(rating),
+      comment,
+    };
+    product.reviews.push(review);
+    product.numReviews = product.reviews.length;
+    product.rating =
+      product.reviews.reduce(
+        (prevVal, nextVal) => nextVal.rating + prevVal,
+        0
+      ) / product.reviews.length;
+    await product.save();
+    res.status(201).json({ message: "Review added" });
   } else {
     res.status(404);
     throw new Error("product not found");

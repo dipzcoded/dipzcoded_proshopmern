@@ -1,5 +1,5 @@
 import StarRatings from "react-star-ratings";
-export const showRating = (rating) => (
+export const showRating = (rating, numRating) => (
   <div
     style={{
       display: "flex",
@@ -14,8 +14,10 @@ export const showRating = (rating) => (
       starDimension="16px"
       starSpacing="1px"
     />
-    <p style={{ display: "inline-block", marginTop: "2.8px" }}>
-      {rating} {rating === 1 ? "review" : "reviews"}
-    </p>
+    {numRating && (
+      <p style={{ display: "inline-block", marginTop: "2.8px" }}>
+        {numRating} {rating === 1 ? "review" : "reviews"}
+      </p>
+    )}
   </div>
 );

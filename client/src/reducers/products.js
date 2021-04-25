@@ -18,6 +18,10 @@ import {
   PRODUCT_UPDATE_RESET,
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_DELETE_RESET,
+  PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_CREATE_REVIEW_REQUEST,
+  PRODUCT_CREATE_REVIEW_RESET,
+  PRODUCT_CREATE_REVIEW_SUCCESS,
 } from "../types";
 const initialState = {
   products: [],
@@ -158,6 +162,37 @@ export const productUpdateReducer = (state = { product: null }, action) => {
 
     case PRODUCT_UPDATE_RESET:
       return { product: null };
+
+    default:
+      return state;
+  }
+};
+
+export const productReviewCreateReducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PRODUCT_CREATE_REVIEW_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case PRODUCT_CREATE_REVIEW_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        error: null,
+      };
+    case PRODUCT_CREATE_REVIEW_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+      };
+
+    case PRODUCT_CREATE_REVIEW_RESET:
+      return {};
 
     default:
       return state;
