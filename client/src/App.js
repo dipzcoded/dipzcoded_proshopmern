@@ -55,7 +55,7 @@ const App = () => {
             <Route exact path="/admin/userlist" component={UserListScreen} />
             <Route
               exact
-              path="/admin/productlist"
+              path={["/admin/productlist", "/admin/productlist/:pagenumber"]}
               component={ProductListScreen}
             />
             <Route exact path="/admin/orderlist" component={OrderListScreen} />
@@ -72,7 +72,12 @@ const App = () => {
 
             <Route
               exact
-              path={["/search/:keyword", "/"]}
+              path={[
+                "/search/:keyword",
+                "/page/:pagenumber",
+                "/search/:keyword/page/:pagenumber",
+                "/",
+              ]}
               component={HomeScreen}
             />
           </Switch>

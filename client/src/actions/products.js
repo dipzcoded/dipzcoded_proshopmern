@@ -21,11 +21,13 @@ import {
 } from "../types";
 import axios from "axios";
 
-export const loadProducts = (keyword = "") => async (dispatch) => {
+export const loadProducts = (keyword = "", page = "") => async (dispatch) => {
   try {
     dispatch({ type: CLEAR_DETAILS });
     dispatch({ type: PRODUCT_LIST_REQUEST });
-    const { data } = await axios.get(`/api/products?keyword=${keyword}`);
+    const { data } = await axios.get(
+      `/api/products?keyword=${keyword}&pageNumber=${page}`
+    );
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
   } catch (err) {
     dispatch({

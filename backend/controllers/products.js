@@ -3,6 +3,8 @@ import userModel from "../models/User.js";
 import asyncHandler from "express-async-handler";
 
 export const get = asyncHandler(async (req, res) => {
+  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1;
   const keyword = req.query.keyword
     ? {
         name: {
@@ -11,8 +13,12 @@ export const get = asyncHandler(async (req, res) => {
         },
       }
     : {};
-  const products = await productModel.find({ ...keyword });
-  res.status(200).json(products);
+  const count = await productModel.countDocuments({ ...keyword });
+  const products = await productModel
+    .find({ ...keyword })
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 export const getOne = asyncHandler(async (req, res) => {

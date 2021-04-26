@@ -5,17 +5,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadProducts } from "../actions/products";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
-  console.log(keyword);
+  const pageNumber = match.params.pagenumber || 1;
   const dispatch = useDispatch();
-  const { products, isLoading, error } = useSelector(
+  const { products, isLoading, error, page, pages } = useSelector(
     (state) => state.productList
   );
 
   useEffect(() => {
-    dispatch(loadProducts(keyword));
-  }, [dispatch, keyword]);
+    dispatch(loadProducts(keyword, pageNumber));
+  }, [dispatch, keyword, pageNumber]);
 
   if (isLoading) {
     return <Loader />;
@@ -33,6 +34,7 @@ const HomeScreen = ({ match }) => {
           </Col>
         ))}
       </Row>
+      <Paginate pages={pages} page={page} keyword={keyword ? keyword : ""} />
     </>
   );
 };
