@@ -69,7 +69,12 @@ const App = () => {
               path="/admin/product/:id/edit"
               component={ProductEditScreen}
             />
-            <Route exact path="/" component={HomeScreen} />
+
+            <Route
+              exact
+              path={["/search/:keyword", "/"]}
+              component={HomeScreen}
+            />
           </Switch>
         </Container>
       </main>

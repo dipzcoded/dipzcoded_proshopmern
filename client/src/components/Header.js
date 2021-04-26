@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Route } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../actions/user";
 import decode from "jwt-decode";
 import { useLocation } from "react-router-dom";
+import SearchBox from "../components/SearchBox";
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userData);
@@ -50,6 +52,7 @@ const Header = () => {
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+            <Route render={(refProp) => <SearchBox {...refProp} />} />
             <Nav className="ml-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>
