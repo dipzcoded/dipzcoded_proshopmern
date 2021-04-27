@@ -15,6 +15,7 @@ import { getProductByID, createProductReview } from "../actions/products";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../types";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 
 const ProductScreen = ({ match, history }) => {
   const [review, setReview] = useState({
@@ -70,6 +71,7 @@ const ProductScreen = ({ match, history }) => {
 
   return (
     <>
+      <Meta title={product?.name} />
       <Link className="btn btn-light my-3" to="/">
         Go Back
       </Link>

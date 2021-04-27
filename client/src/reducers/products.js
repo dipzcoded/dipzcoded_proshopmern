@@ -22,6 +22,9 @@ import {
   PRODUCT_CREATE_REVIEW_REQUEST,
   PRODUCT_CREATE_REVIEW_RESET,
   PRODUCT_CREATE_REVIEW_SUCCESS,
+  PRODUCT_TOP_FAIL,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_SUCCESS,
 } from "../types";
 const initialState = {
   products: [],
@@ -195,6 +198,34 @@ export const productReviewCreateReducer = (state = {}, action) => {
 
     case PRODUCT_CREATE_REVIEW_RESET:
       return {};
+
+    default:
+      return state;
+  }
+};
+
+export const productTopRatedReducer = (state = {}, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case PRODUCT_TOP_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case PRODUCT_TOP_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        products: payload,
+        error: null,
+      };
+    case PRODUCT_TOP_FAIL:
+      return {
+        ...state,
+        isLoading: false,
+        error: payload,
+      };
 
     default:
       return state;

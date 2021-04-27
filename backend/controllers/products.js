@@ -21,6 +21,11 @@ export const get = asyncHandler(async (req, res) => {
   res.status(200).json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
+export const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await productModel.find({}).sort({ rating: -1 }).limit(3);
+  res.json(products);
+});
+
 export const getOne = asyncHandler(async (req, res) => {
   let product;
   if (
